@@ -7,6 +7,7 @@ export async function sendEmail(formData: {
   phone: string;
   email: string;
   message: string;
+  category: string;
 }) {
   const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -25,6 +26,10 @@ export async function sendEmail(formData: {
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
         <h2 style="border-bottom: 1px solid #eee; padding-bottom: 12px;">새 문의가 도착했습니다</h2>
         <table style="width: 100%; border-collapse: collapse; margin-top: 16px;">
+          <tr>
+            <td style="padding: 10px 0; color: #666; width: 80px;">카테고리</td>
+            <td style="padding: 10px 0; font-weight: 500;">${formData.category}</td>
+          </tr>
           <tr>
             <td style="padding: 10px 0; color: #666; width: 80px;">이름</td>
             <td style="padding: 10px 0; font-weight: 500;">${formData.name}</td>

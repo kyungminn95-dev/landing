@@ -3,15 +3,41 @@
 import { useState } from "react";
 import { sendEmail } from "@/app/actions/sendEmail";
 
+const CATEGORIES = {
+  "상업음악": ["광고음악", "로고송", "BGM", "징글", "동요"],
+  "음악 제작": ["작편곡", "스트링 편곡", "연주", "믹싱/마스터링"],
+} as const;
+
+type MainCat = keyof typeof CATEGORIES;
+
+function formatPhone(value: string) {
+  const digits = value.replace(/\D/g, "").slice(0, 11);
+  if (digits.length < 4) return digits;
+  if (digits.length < 7) return `${digits.slice(0, 3)}-${digits.slice(3)}`;
+  if (digits.length < 11) return `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6)}`;
+  return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7)}`;
+}
+
 export default function ContactForm() {
   const [agreed, setAgreed] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [mainCat, setMainCat] = useState<MainCat | "">("");
+  const [subCat, setSubCat] = useState("");
   const [form, setForm] = useState({ name: "", phone: "", email: "", message: "" });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    if (e.target.name === "phone") {
+      setForm((prev) => ({ ...prev, phone: formatPhone(e.target.value) }));
+    } else {
+      setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    }
+  };
+
+  const handleMainCat = (cat: MainCat) => {
+    setMainCat(cat);
+    setSubCat("");
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -20,7 +46,7 @@ export default function ContactForm() {
     setLoading(true);
     setError("");
     try {
-      await sendEmail(form);
+      await sendEmail({ ...form, category: mainCat ? `${mainCat}${subCat ? " > " + subCat : ""}` : "미선택" });
       setSubmitted(true);
     } catch {
       setError("전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
@@ -53,6 +79,50 @@ export default function ContactForm() {
       </p>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+
+        {/* 카테고리 */}
+        <div className="flex flex-col gap-3">
+          <p className="text-xs tracking-widest uppercase" style={{ color: "var(--fg-subtle)" }}>카테고리</p>
+          {/* 대분류 */}
+          <div className="flex gap-2">
+            {(Object.keys(CATEGORIES) as MainCat[]).map((cat) => (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => handleMainCat(cat)}
+                className="px-4 py-2 rounded-full text-sm border transition-all"
+                style={{
+                  background: mainCat === cat ? "var(--fg)" : "var(--bg)",
+                  color: mainCat === cat ? "var(--bg)" : "var(--fg-muted)",
+                  borderColor: mainCat === cat ? "var(--fg)" : "var(--border)",
+                }}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+          {/* 소분류 */}
+          {mainCat && (
+            <div className="flex flex-wrap gap-2">
+              {CATEGORIES[mainCat].map((sub) => (
+                <button
+                  key={sub}
+                  type="button"
+                  onClick={() => setSubCat(sub === subCat ? "" : sub)}
+                  className="px-3 py-1.5 rounded-full text-sm border transition-all"
+                  style={{
+                    background: subCat === sub ? "var(--fg)" : "var(--bg)",
+                    color: subCat === sub ? "var(--bg)" : "var(--fg-muted)",
+                    borderColor: subCat === sub ? "var(--fg)" : "var(--border)",
+                  }}
+                >
+                  {sub}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
         <input
           required name="name" placeholder="이름*"
           value={form.name} onChange={handleChange}
@@ -63,6 +133,7 @@ export default function ContactForm() {
         <input
           required name="phone" placeholder="전화번호*"
           value={form.phone} onChange={handleChange}
+          inputMode="numeric"
           className={inputClass} style={inputStyle}
           onFocus={e => (e.currentTarget.style.borderColor = "var(--fg-muted)")}
           onBlur={e => (e.currentTarget.style.borderColor = "var(--border)")}
