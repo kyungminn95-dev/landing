@@ -1,26 +1,114 @@
 @import "tailwindcss";
 
+/* class-based dark mode for Tailwind v4 */
+@variant dark (&:where(.dark, .dark *));
+
+/* ── Light mode (default) ── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #fafafa;
+  --fg: #111111;
+  --fg-muted: #666666;
+  --fg-subtle: #999999;
+  --border: rgba(0,0,0,0.08);
+  --nav-bg: rgba(250,250,250,0.8);
+  --card-bg: rgba(0,0,0,0.03);
+  --scrollbar-track: #eee;
+  --scrollbar-thumb: #ccc;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ── Dark mode ── */
+.dark {
+  --bg: #080808;
+  --fg: #f0f0f0;
+  --fg-muted: rgba(240,240,240,0.5);
+  --fg-subtle: rgba(240,240,240,0.3);
+  --border: rgba(255,255,255,0.08);
+  --nav-bg: rgba(8,8,8,0.75);
+  --card-bg: rgba(255,255,255,0.03);
+  --scrollbar-track: #111;
+  --scrollbar-thumb: #333;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+html { scroll-behavior: smooth; }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'Noto Sans KR', 'Inter', sans-serif;
+  transition: background 0.2s, color 0.2s;
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--scrollbar-track); }
+::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 2px; }
+
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes wavePulse {
+  from { transform: scaleY(0.4); }
+  to   { transform: scaleY(1); }
+}
+
+@keyframes floatRandom {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
+}
+
+@keyframes flipIn {
+  from { transform: rotateX(-90deg); opacity: 0; }
+  to   { transform: rotateX(0deg);   opacity: 1; }
+}
+@keyframes flipOut {
+  from { transform: rotateX(0deg);  opacity: 1; }
+  to   { transform: rotateX(90deg); opacity: 0; }
+}
+
+@keyframes badgeWiggle {
+  0%, 100% { transform: rotate(10deg); }
+  25%       { transform: rotate(14deg) scale(1.05); }
+  75%       { transform: rotate(6deg) scale(0.97); }
+}
+
+.badge-wiggle {
+  animation: badgeWiggle 2.4s ease-in-out infinite;
+}
+
+.marquee-inner {
+  display: flex;
+  animation: marquee 18s linear infinite;
+  width: max-content;
+}
+.marquee-inner:hover { animation-play-state: paused; }
+
+.fade-up { animation: fadeUp 0.9s cubic-bezier(.22,1,.36,1) both; }
+.delay-1 { animation-delay: 0.15s; }
+.delay-2 { animation-delay: 0.3s; }
+.delay-3 { animation-delay: 0.45s; }
+
+.wave-bar {
+  display: inline-block;
+  border-radius: 2px;
+  animation: wavePulse 1.2s ease-in-out infinite alternate;
+}
+
+.glow { text-shadow: 0 0 80px rgba(128,128,128,0.15); }
+
+#ch-plugin-entry {
+  position: fixed !important;
+  bottom: 20px !important;
+  right: 20px !important;
+  z-index: 9999 !important;
+  transform: scale(1.4) !important;
+  transform-origin: bottom right !important;
 }
