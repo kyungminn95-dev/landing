@@ -37,6 +37,7 @@ export default function HeroStrings() {
 
     function animate() {
       t += 0.018;
+      if (!svg) return;
       const { width, height } = svg.getBoundingClientRect();
       paths.forEach((path, i) => {
         path.setAttribute("d", buildPath(width, height, STRINGS[i], t));
