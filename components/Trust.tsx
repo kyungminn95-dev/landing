@@ -27,14 +27,14 @@ export default function Trust() {
       <div className="hidden md:flex flex-col gap-8 items-center px-6">
         <div className="flex items-center justify-center gap-10">
           {LOGOS.slice(0, 5).map((logo) => (
-            <div key={logo.alt} className="relative h-12 w-32 shrink-0 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+            <div key={logo.alt} className="relative h-12 w-32 shrink-0 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-300" style={{ filter: "drop-shadow(0 1px 4px rgba(0,0,0,0.12))" }}>
               <Image src={logo.src} alt={logo.alt} fill className="object-contain" />
             </div>
           ))}
         </div>
         <div className="flex items-center justify-center gap-10">
           {LOGOS.slice(5).map((logo) => (
-            <div key={logo.alt} className="relative h-12 w-32 shrink-0 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+            <div key={logo.alt} className="relative h-12 w-32 shrink-0 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-300" style={{ filter: "drop-shadow(0 1px 4px rgba(0,0,0,0.12))" }}>
               <Image src={logo.src} alt={logo.alt} fill className="object-contain" />
             </div>
           ))}
