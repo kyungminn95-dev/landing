@@ -26,7 +26,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative flex flex-col justify-center items-center overflow-hidden pt-48 pb-48 md:pt-64 md:pb-64">
+    <section className="relative flex flex-col justify-center items-center overflow-hidden pt-48 pb-72 md:pt-64 md:pb-64">
       <div className="relative z-10 max-w-4xl mx-auto px-6 w-full text-center flex flex-col items-center">
         <div
           className="fade-up inline-flex items-center gap-2 mb-6 px-3 py-1.5 rounded-full border text-xs tracking-wider uppercase"
