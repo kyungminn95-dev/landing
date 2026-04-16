@@ -117,11 +117,11 @@ export default function Hero() {
             서비스 보기
           </a>
           <a
-            href="/portfolio"
+            href="/contact"
             className="px-6 py-3 border text-sm rounded-full transition-colors"
             style={{ borderColor: "var(--border)", color: "var(--fg-muted)" }}
           >
-            포트폴리오 듣기
+            무료 상담하기
           </a>
         </div>
       </div>
