@@ -87,7 +87,7 @@ export default function About() {
             transitionDelay: "420ms",
           }}
         >
-          CJ, 티빙 등 국내 주요 브랜드와 함께해온 10년.<br />
+          CJ, 농림축산식품부 등 국내 주요 브랜드와 함께해온 10년.<br />
           브랜드의 소리를 만듭니다.
         </p>
 
