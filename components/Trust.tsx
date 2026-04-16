@@ -45,7 +45,7 @@ export default function Trust() {
       <div className="md:hidden overflow-hidden">
         <div className="marquee-inner">
           {MARQUEE_LOGOS.map((logo, i) => (
-            <div key={i} className="relative h-7 w-24 mx-6 shrink-0 grayscale opacity-50">
+            <div key={i} className="relative h-7 w-24 mx-6 shrink-0 opacity-60" style={{ filter: "drop-shadow(0 1px 3px rgba(0,0,0,0.06))" }}>
               <Image src={logo.src} alt={logo.alt} fill className="object-contain" />
             </div>
           ))}
