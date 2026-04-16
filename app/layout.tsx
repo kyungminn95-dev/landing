@@ -40,8 +40,8 @@ export default function RootLayout({
         {children}
         <Script id="channel-io" strategy="afterInteractive">{`
           (function(){var w=window;if(w.ChannelIO){return w.console.error("ChannelIO script included twice.")}var ch=function(){ch.c(arguments)};ch.q=[];ch.c=function(args){ch.q.push(args)};w.ChannelIO=ch;function l(){if(w.ChannelIOInitialized){return}w.ChannelIOInitialized=true;var s=document.createElement("script");s.type="text/javascript";s.async=true;s.src="https://cdn.channel.io/plugin/ch-plugin-web.js";var x=document.getElementsByTagName("script")[0];x.parentNode.insertBefore(s,x)}if(document.readyState==="complete"){l()}else{w.addEventListener("DOMContentLoaded",l);w.addEventListener("load",l)}})();
-          var isMobile = window.innerWidth < 768;
-          ChannelIO('boot', { pluginKey: '19e86945-2340-4493-9468-1bfbfe38615e', hidePopup: isMobile });
+          ChannelIO('boot', { pluginKey: '19e86945-2340-4493-9468-1bfbfe38615e' });
+          if (window.innerWidth < 768) { ChannelIO('hideMessenger'); }
         `}</Script>
       </body>
     </html>
