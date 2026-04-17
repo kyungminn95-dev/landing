@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Noto_Sans_KR, Inter } from "next/font/google";
 import "./globals.css";
+import SparkWrapper from "@/components/SparkWrapper";
 
 const notoSansKr = Noto_Sans_KR({
   variable: "--font-noto",
@@ -46,16 +47,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className={`${notoSansKr.variable} ${inter.variable} scroll-smooth`}>
-      <head>
-        {/* 테마 플래시 방지: hydration 전에 class 적용 */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'){document.documentElement.classList.add('dark')}}catch(e){}})()`,
-          }}
-        />
-      </head>
+
       <body className="antialiased" style={{ fontFamily: "var(--font-noto), var(--font-inter), sans-serif" }}>
+        <SparkWrapper>
         {children}
+        </SparkWrapper>
         {/* 카카오 오픈채팅 플로팅 버튼 */}
         <div style={{ position: "fixed", bottom: "24px", right: "24px", zIndex: 9999, display: "flex", flexDirection: "column", alignItems: "center", gap: "8px" }}>
           {/* 말풍선 */}

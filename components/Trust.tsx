@@ -1,7 +1,10 @@
-import Image from "next/image";
+"use client";
 
-const LOGOS = [
+import LogoLoop from "./LogoLoop";
+
+const logos = [
   { src: "/logos/cj-enm.png",    alt: "CJ ENM" },
+  { src: "/logos/cj-onstyle.png", alt: "CJ OnStyle" },
   { src: "/logos/tving.png",      alt: "TVING" },
   { src: "/logos/ihq.png",        alt: "iHQ" },
   { src: "/logos/bbosing-tv.png", alt: "뽀싱 TV" },
@@ -13,9 +16,6 @@ const LOGOS = [
   { src: "/logos/kanatales.png",  alt: "카나테일즈" },
 ];
 
-// 마르퀴용: 2배 복제
-const MARQUEE_LOGOS = [...LOGOS, ...LOGOS];
-
 export default function Trust() {
   return (
     <section className="py-8">
@@ -23,33 +23,35 @@ export default function Trust() {
         함께한 클라이언트
       </p>
 
-      {/* 데스크탑: 2줄, 각 행 가운데 정렬 */}
-      <div className="hidden md:flex flex-col gap-8 items-center px-6">
-        <div className="flex items-center justify-center gap-10">
-          {LOGOS.slice(0, 5).map((logo) => (
-            <div key={logo.alt} className="relative h-12 w-32 shrink-0 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-300" style={{ filter: "drop-shadow(0 1px 3px rgba(0,0,0,0.06))" }}>
-              <Image src={logo.src} alt={logo.alt} fill className="object-contain" />
+      <div className="max-w-6xl mx-auto overflow-hidden">
+        <LogoLoop
+          logos={logos}
+          speed={60}
+          direction="left"
+          logoHeight={40}
+          gap={48}
+          hoverSpeed={0}
+          fadeOut
+          fadeOutColor="#f2f2f2"
+          ariaLabel="함께한 클라이언트"
+          renderItem={(item, key) => (
+            <div
+              key={key}
+              style={{
+                filter: "grayscale(100%)",
+                opacity: 0.45,
+                transition: "opacity 0.3s, filter 0.3s",
+                height: "40px",
+                display: "flex",
+                alignItems: "center",
+              }}
+              onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.opacity = "1"; (e.currentTarget as HTMLDivElement).style.filter = "grayscale(0%)"; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.opacity = "0.45"; (e.currentTarget as HTMLDivElement).style.filter = "grayscale(100%)"; }}
+            >
+              {"src" in item && <img src={item.src} alt={item.alt ?? ""} style={{ height: "40px", width: "auto", objectFit: "contain" }} draggable={false} />}
             </div>
-          ))}
-        </div>
-        <div className="flex items-center justify-center gap-10">
-          {LOGOS.slice(5).map((logo) => (
-            <div key={logo.alt} className="relative h-12 w-32 shrink-0 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-300" style={{ filter: "drop-shadow(0 1px 3px rgba(0,0,0,0.06))" }}>
-              <Image src={logo.src} alt={logo.alt} fill className="object-contain" />
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* 모바일: 마르퀴 */}
-      <div className="md:hidden overflow-hidden">
-        <div className="marquee-inner">
-          {MARQUEE_LOGOS.map((logo, i) => (
-            <div key={i} className="relative h-7 w-24 mx-6 shrink-0 opacity-60" style={{ filter: "drop-shadow(0 1px 3px rgba(0,0,0,0.06))" }}>
-              <Image src={logo.src} alt={logo.alt} fill className="object-contain" />
-            </div>
-          ))}
-        </div>
+          )}
+        />
       </div>
     </section>
   );

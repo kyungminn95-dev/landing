@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import LineWaves from "./LineWaves";
 
 const WORDS = [
   { text: "브랜드",  gradient: "linear-gradient(135deg, #6366f1, #ec4899)" },
@@ -27,14 +28,24 @@ export default function Hero() {
 
   return (
     <section className="relative flex flex-col justify-center items-center overflow-hidden pt-48 pb-72 md:pt-64 md:pb-64">
-      {/* 노이즈 텍스처 배경 */}
-      <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ opacity: 0.4 }}>
-        <filter id="noise">
-          <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
-          <feColorMatrix type="saturate" values="0" />
-        </filter>
-        <rect width="100%" height="100%" filter="url(#noise)" />
-      </svg>
+      {/* LineWaves 배경 */}
+      <div className="absolute inset-0">
+        <LineWaves
+          speed={0.3}
+          innerLineCount={16}
+          outerLineCount={35}
+          warpIntensity={1.0}
+          rotation={-45}
+          edgeFadeWidth={0.0}
+          colorCycleSpeed={0.7}
+          brightness={0.1}
+          color1="#111111"
+          color2="#111111"
+          color3="#111111"
+          enableMouseInteraction={true}
+          mouseInfluence={2.0}
+        />
+      </div>
 
       {/* 하단 페이드 */}
       <div className="absolute bottom-0 left-0 right-0 h-48 pointer-events-none" style={{ background: "linear-gradient(to bottom, transparent, var(--bg))" }} />
