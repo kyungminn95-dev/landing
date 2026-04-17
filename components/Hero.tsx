@@ -103,25 +103,25 @@ export default function Hero() {
           className="fade-up delay-2 text-lg md:text-xl font-light max-w-lg leading-relaxed mb-8"
           style={{ color: "var(--fg-muted)" }}
         >
-          광고음악 · 로고송 · BGM · Mix/Mastering
+          기업의 브랜딩부터 아티스트의 감성까지,
           <br />
-          올인원 스튜디오
+          소리의 가치를 완성합니다.
         </p>
 
         <div className="fade-up delay-3 flex flex-wrap justify-center gap-3">
           <a
-            href="/services"
+            href="/services/business"
             className="px-6 py-3 text-sm font-semibold rounded-full transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 active:scale-95"
             style={{ background: "var(--fg)", color: "var(--bg)" }}
           >
-            서비스 보기
+            브랜드 사운드 →
           </a>
           <a
-            href="/contact"
+            href="/services/artist"
             className="px-6 py-3 border text-sm rounded-full transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md active:translate-y-0 active:scale-95"
             style={{ borderColor: "var(--border)", color: "var(--fg-muted)" }}
           >
-            무료 상담하기
+            아티스트 서비스 →
           </a>
         </div>
       </div>

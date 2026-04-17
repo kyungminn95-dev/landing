@@ -1,13 +1,15 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 
 const links = [
-  { href: "/#about", label: "소개" },
-  { href: "/services", label: "서비스" },
   { href: "/portfolio", label: "포트폴리오" },
-  { href: "/guide", label: "제작안내" },
+];
+
+const serviceLinks = [
+  { href: "/services/business", label: "Business", sub: "광고 · BGM" },
+  { href: "/services/artist", label: "Artist", sub: "믹싱 · 마스터링 · 편곡" },
 ];
 
 function SunIcon() {
@@ -30,6 +32,9 @@ function MoonIcon() {
 export default function Nav() {
   const [dark, setDark] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const servicesTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // 초기 테마 읽기
   useEffect(() => {
@@ -73,6 +78,56 @@ export default function Nav() {
 
         {/* Center — Links (desktop) */}
         <div className="hidden md:flex items-center justify-center gap-7 text-sm">
+          <Link
+            href="/#about"
+            className="transition-colors"
+            style={{ color: "var(--fg-muted)" }}
+            onMouseEnter={e => (e.currentTarget.style.color = "var(--fg)")}
+            onMouseLeave={e => (e.currentTarget.style.color = "var(--fg-muted)")}
+          >
+            About
+          </Link>
+
+          {/* 서비스 드롭다운 */}
+          <div
+            className="relative"
+            onMouseEnter={() => {
+              if (servicesTimeout.current) clearTimeout(servicesTimeout.current);
+              setServicesOpen(true);
+            }}
+            onMouseLeave={() => {
+              servicesTimeout.current = setTimeout(() => setServicesOpen(false), 150);
+            }}
+          >
+            <button
+              className="transition-colors"
+              style={{ color: servicesOpen ? "var(--fg)" : "var(--fg-muted)" }}
+            >
+              서비스
+            </button>
+            {servicesOpen && (
+              <div
+                className="absolute top-full left-1/2 -translate-x-1/2 mt-3 rounded-xl border overflow-hidden"
+                style={{ background: "var(--nav-bg)", borderColor: "var(--border)", minWidth: "180px", backdropFilter: "blur(20px)" }}
+              >
+                {serviceLinks.map((sl) => (
+                  <Link
+                    key={sl.href}
+                    href={sl.href}
+                    className="flex flex-col px-4 py-3 transition-colors"
+                    style={{ color: "var(--fg-muted)" }}
+                    onMouseEnter={e => (e.currentTarget.style.color = "var(--fg)")}
+                    onMouseLeave={e => (e.currentTarget.style.color = "var(--fg-muted)")}
+                    onClick={() => setServicesOpen(false)}
+                  >
+                    <span className="font-semibold text-sm">{sl.label}</span>
+                    <span className="text-xs mt-0.5" style={{ color: "var(--fg-subtle)" }}>{sl.sub}</span>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+
           {links.map((l) => (
             <Link
               key={l.href}
@@ -133,6 +188,37 @@ export default function Nav() {
           className="md:hidden border-t px-6 py-4 flex flex-col gap-4 text-sm"
           style={{ borderColor: "var(--border)", color: "var(--fg-muted)" }}
         >
+          <Link href="/#about" onClick={() => setMenuOpen(false)}>About</Link>
+
+          {/* 서비스 */}
+          <button
+            className="flex items-center justify-between w-full text-left"
+            onClick={() => setMobileServicesOpen((v) => !v)}
+          >
+            <span>서비스</span>
+            <svg
+              className="w-4 h-4 transition-transform"
+              style={{ transform: mobileServicesOpen ? "rotate(180deg)" : "rotate(0deg)" }}
+              fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          {mobileServicesOpen && (
+            <div className="flex flex-col gap-3 pl-3 border-l" style={{ borderColor: "var(--border)" }}>
+              {serviceLinks.map((sl) => (
+                <Link
+                  key={sl.href}
+                  href={sl.href}
+                  onClick={() => { setMenuOpen(false); setMobileServicesOpen(false); }}
+                >
+                  <span className="font-semibold">{sl.label}</span>
+                  <span className="ml-2 text-xs" style={{ color: "var(--fg-subtle)" }}>{sl.sub}</span>
+                </Link>
+              ))}
+            </div>
+          )}
+
           {links.map((l) => (
             <Link key={l.href} href={l.href} onClick={() => setMenuOpen(false)}>
               {l.label}

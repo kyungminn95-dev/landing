@@ -4,8 +4,8 @@ import { useEffect, useRef, useState } from "react";
 
 const stats = [
   { value: 2014, suffix: "",  label: "Since" },
-  { value: 200,  suffix: "+", label: "납품 트랙" },
-  { value: 50,   suffix: "+", label: "브랜드" },
+  { value: 300,  suffix: "+", label: "작업 트랙 수" },
+  { value: 20,   suffix: "+", label: "브랜드" },
 ];
 
 const TAGS = ["광고음악", "BGM", "로고송", "스트링 편곡", "동요", "믹싱 / 마스터링"];
@@ -87,8 +87,8 @@ export default function About() {
             transitionDelay: "420ms",
           }}
         >
-          CJ, 농림축산식품부 등 국내 주요 브랜드와 함께해온 10년.<br />
-          브랜드의 음악을 설계합니다.
+          CJ, 농림축산식품부 등 주요 브랜드부터<br />
+          실력 있는 인디 아티스트들까지 함께해온 10년.
         </p>
 
         {/* Tags */}

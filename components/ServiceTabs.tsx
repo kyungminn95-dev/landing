@@ -26,8 +26,8 @@ const SERVICES = [
     number: "03",
     label: "믹싱 · 마스터링",
     badge: null,
-    heading: "어떤 플랫폼에서도\n최적의 사운드",
-    body: "TV, 유튜브, 스트리밍 플랫폼별 라우드니스 규격에 맞는 믹싱·마스터링으로 어떤 환경에서도 의도한 사운드를 전달합니다.",
+    heading: "아티스트의 사운드를\n완성합니다",
+    body: "곡의 감정을 살리는 믹싱, 어떤 플랫폼에서 들어도 흔들리지 않는 마스터링. 음악의 완성은 사운드에 있습니다.",
     features: ["LUFS 맞춤 마스터링", "최고급 스튜디오 장비 보유", "스템 납품 가능"],
     image: "daw",
   },
@@ -138,7 +138,13 @@ function PlaceholderImage() {
   );
 }
 
-export default function ServiceTabs() {
+export default function ServiceTabs({ filter }: { filter?: "business" | "artist" }) {
+  const filtered = filter === "business"
+    ? SERVICES.filter((s) => s.number === "01")
+    : filter === "artist"
+    ? SERVICES.filter((s) => s.number === "02" || s.number === "03")
+    : SERVICES;
+
   return (
     <section id="services" className="max-w-6xl mx-auto px-6 py-28">
       <p className="text-xs tracking-widest uppercase mb-4" style={{ color: "var(--fg-subtle)" }}>Services</p>
@@ -147,14 +153,16 @@ export default function ServiceTabs() {
       </h2>
 
       <div className="flex flex-col gap-32">
-        {SERVICES.map((s, i) => (
+        {filtered.map((s, i) => {
+          const displayNum = String(i + 1).padStart(2, "0");
+          return (
           <div
             key={s.number}
             className={`grid md:grid-cols-2 gap-16 items-center ${i % 2 === 1 ? "md:[&>*:first-child]:order-2" : ""}`}
           >
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <span className="text-xs font-mono tracking-widest" style={{ color: "var(--fg-subtle)" }}>{s.number}</span>
+                <span className="text-xs font-mono tracking-widest" style={{ color: "var(--fg-subtle)" }}>{displayNum}</span>
                 {s.badge && (
                   <span
                     className="px-2.5 py-0.5 rounded-full border text-xs"
@@ -184,7 +192,8 @@ export default function ServiceTabs() {
               </div>
             ) : <PlaceholderImage />}
           </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );
