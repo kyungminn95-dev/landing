@@ -18,7 +18,7 @@ const MARQUEE_LOGOS = [...LOGOS, ...LOGOS];
 
 export default function Trust() {
   return (
-    <section className="border-t py-8" style={{ borderColor: "var(--border)" }}>
+    <section className="py-8">
       <p className="text-center text-xs tracking-widest uppercase mb-8" style={{ color: "var(--fg-subtle)" }}>
         함께한 클라이언트
       </p>

@@ -27,6 +27,18 @@ export default function Hero() {
 
   return (
     <section className="relative flex flex-col justify-center items-center overflow-hidden pt-48 pb-72 md:pt-64 md:pb-64">
+      {/* 노이즈 텍스처 배경 */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ opacity: 0.4 }}>
+        <filter id="noise">
+          <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
+          <feColorMatrix type="saturate" values="0" />
+        </filter>
+        <rect width="100%" height="100%" filter="url(#noise)" />
+      </svg>
+
+      {/* 하단 페이드 */}
+      <div className="absolute bottom-0 left-0 right-0 h-48 pointer-events-none" style={{ background: "linear-gradient(to bottom, transparent, var(--bg))" }} />
+
       <div className="relative z-10 max-w-4xl mx-auto px-6 w-full text-center flex flex-col items-center">
         <div
           className="fade-up inline-flex items-center gap-2 mb-6 px-3 py-1.5 rounded-full border text-xs tracking-wider uppercase"
