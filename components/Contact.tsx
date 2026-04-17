@@ -7,16 +7,23 @@ export default function Contact() {
     const loader = document.createElement("script");
     loader.src = "https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js";
     loader.charset = "UTF-8";
-    loader.onload = () => {
-      // @ts-expect-error daum is loaded globally
-      new daum.roughmap.Lander({
-        timestamp: "1776394601661",
-        key: "2aeiorcmz2ei",
-        mapWidth: "640",
-        mapHeight: "360",
-      }).render();
-    };
     document.body.appendChild(loader);
+
+    const interval = setInterval(() => {
+      // @ts-expect-error daum is loaded globally
+      if (window.daum?.roughmap?.Lander) {
+        clearInterval(interval);
+        // @ts-expect-error daum is loaded globally
+        new window.daum.roughmap.Lander({
+          timestamp: "1776394601661",
+          key: "2aeiorcmz2ei",
+          mapWidth: "640",
+          mapHeight: "360",
+        }).render();
+      }
+    }, 100);
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
