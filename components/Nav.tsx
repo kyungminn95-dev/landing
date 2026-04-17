@@ -8,7 +8,7 @@ const links = [
 ];
 
 const serviceLinks = [
-  { href: "/services/business", label: "Business", sub: "광고 · BGM" },
+  { href: "/services/brand", label: "Brand", sub: "광고 · 로고송 · BGM" },
   { href: "/services/artist", label: "Artist", sub: "믹싱 · 마스터링 · 편곡" },
 ];
 

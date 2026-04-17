@@ -8,19 +8,19 @@ type VideoItem   = { type: "video";   src: string; title: string; label: string;
 type Item = YoutubeItem | VideoItem;
 
 const TABS = {
-  "상업음악": ["전체", "광고음악", "로고송", "BGM", "징글", "동요"],
-  "음악 제작": ["전체", "작편곡", "스트링 편곡", "연주", "믹싱/마스터링"],
+  "Brand": ["전체", "광고음악", "로고송", "BGM", "징글", "동요"],
+  "Artist": ["전체", "작편곡", "스트링 편곡", "연주", "믹싱/마스터링"],
 } as const;
 
 type TabKey = keyof typeof TABS;
 
 const CATEGORY_ORDER: Record<TabKey, string[]> = {
-  "상업음악": ["광고음악", "로고송", "BGM", "징글", "동요"],
-  "음악 제작": ["작편곡", "스트링 편곡", "연주", "믹싱/마스터링"],
+  "Brand": ["광고음악", "로고송", "BGM", "징글", "동요"],
+  "Artist": ["작편곡", "스트링 편곡", "연주", "믹싱/마스터링"],
 };
 
 const ITEMS: Record<TabKey, Item[]> = {
-  "상업음악": [
+  "Brand": [
     { type: "youtube", id: "Dz5KIa-opgE",  title: "농림축산식품부 — 축산물 PLS",          label: "광고음악", tags: ["광고음악", "징글"], views: "120만" },
     { type: "video",   src: "/videos/cj-gabi.mov",    title: "CJ 온스타일 — 가비",        label: "광고음악", thumbnail: "/thumbnails/cj-gabi.jpg" },
     { type: "video",   src: "/videos/cj-busters.mov", title: "CJ 온스타일 — 버스터즈",     label: "광고음악", thumbnail: "/thumbnails/cj-busters.jpg" },
@@ -42,7 +42,7 @@ const ITEMS: Record<TabKey, Item[]> = {
     { type: "youtube", id: "UoRxZKOEsQg",  title: "카나테일즈 — 검과 소녀의 이야기 (앨범 OST)",  label: "BGM" },
     { type: "youtube", id: "T3ywSz41bxI",  title: "카나테일즈 — 검과 소녀의 이야기 (상점 OST)", label: "BGM" },
   ],
-  "음악 제작": [
+  "Artist": [
     { type: "youtube", id: "UO39v_H74S0", title: "티빙 — '브로앤마블' OST",               label: "스트링 편곡", tags: ["스트링 편곡", "BGM"] },
     { type: "youtube", id: "SQdzcK89-q4", title: "하민우 — 행복하자",                      label: "스트링 편곡" },
     { type: "youtube", id: "npJ6TSWsK7I", title: "주영 — 들리나요 (드라마 '리멤버')",       label: "연주" },
@@ -156,7 +156,7 @@ function Card({ item, onClick }: { item: Item; onClick: () => void }) {
 
 export default function Portfolio() {
   const [active, setActive] = useState<Item | null>(null);
-  const [tab, setTab] = useState<TabKey>("상업음악");
+  const [tab, setTab] = useState<TabKey>("Brand");
   const [filter, setFilter] = useState<string>("전체");
 
   const handleTabChange = (t: TabKey) => {
@@ -174,19 +174,31 @@ export default function Portfolio() {
     <section className="max-w-6xl mx-auto px-6 py-24">
       <p className="text-xs tracking-widest uppercase mb-10" style={{ color: "var(--fg-subtle)" }}>Portfolio</p>
 
-      {/* 상위 탭 */}
-      <div className="flex gap-6 mb-8 border-b" style={{ borderColor: "var(--border)" }}>
-        {(Object.keys(TABS) as TabKey[]).map((t) => (
+      {/* 상위 탭 — 카드형 */}
+      <div className="grid grid-cols-2 gap-3 mb-10">
+        {(
+          [
+            { key: "Brand",  sub: "광고음악 · BGM · 로고송" },
+            { key: "Artist", sub: "믹싱 · 마스터링 · 편곡" },
+          ] as { key: TabKey; sub: string }[]
+        ).map(({ key, sub }) => (
           <button
-            key={t}
-            onClick={() => handleTabChange(t)}
-            className="pb-3 text-sm font-semibold transition-colors relative"
-            style={{ color: tab === t ? "var(--fg)" : "var(--fg-subtle)" }}
+            key={key}
+            onClick={() => handleTabChange(key)}
+            className="text-left px-6 py-5 rounded-2xl border-2 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md active:translate-y-0 active:scale-95"
+            style={{
+              borderColor: tab === key ? "var(--fg)" : "var(--border)",
+              background: tab === key ? "var(--fg)" : "var(--card-bg)",
+              boxShadow: tab === key ? "0 4px 20px rgba(0,0,0,0.15)" : undefined,
+            }}
           >
-            {t}
-            {tab === t && (
-              <span className="absolute bottom-0 left-0 right-0 h-0.5" style={{ background: "var(--fg)" }} />
-            )}
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-xl font-black mb-1" style={{ color: tab === key ? "var(--bg)" : "var(--fg)" }}>{key}</p>
+                <p className="text-xs" style={{ color: tab === key ? "var(--bg)" : "var(--fg-subtle)", opacity: tab === key ? 0.7 : 1 }}>{sub}</p>
+              </div>
+              <span className="text-lg" style={{ color: tab === key ? "var(--bg)" : "var(--fg-subtle)", opacity: 0.5 }}>→</span>
+            </div>
           </button>
         ))}
       </div>

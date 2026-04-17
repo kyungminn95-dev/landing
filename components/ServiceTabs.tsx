@@ -7,15 +7,17 @@ const SERVICES = [
   {
     number: "01",
     label: "광고음악 · 로고송 · CM송",
-    badge: "AI 도입",
+    tags: ["광고음악", "로고송", "CM송", "BGM", "징글"],
+    badge: null,
     heading: "더 빠르게,\n더 합리적으로",
-    body: "AI를 작업 도구로 활용해 데모 납기와 비용을 대폭 줄였습니다. 광고음악, 로고송, CM송 — 브랜드가 원하는 사운드를 레퍼런스 하나로 빠르게 구현합니다.",
-    features: ["24시간 내 데모 제공", "기존 대비 합리적인 단가", "상업용 라이선스 전량 이전"],
+    body: "광고음악, 로고송, CM송 — 브랜드가 전달하고자 하는 메시지를 사운드로 구현합니다.\nCJ, 농림축산식품부 등 국내 주요 브랜드와 10년간 함께한 경험을 바탕으로, 레퍼런스 하나로 빠르고 정확하게 작업합니다.",
+    features: ["상담부터 납품까지 원스톱 진행", "만족할 때까지 수정 보장", "저작권 걱정 없는 완전 양도"],
     image: "floating",
   },
   {
     number: "02",
     label: "작곡 · 편곡",
+    tags: null,
     badge: null,
     heading: "아티스트의 음악을\n함께 만듭니다",
     body: "가요, 발라드, 팝, 어쿠스틱까지. 아티스트의 색깔을 살린 작편곡과 스트링 편곡을 제공합니다. 단순한 반주를 넘어 곡의 감정을 설계합니다.",
@@ -25,9 +27,10 @@ const SERVICES = [
   {
     number: "03",
     label: "믹싱 · 마스터링",
+    tags: null,
     badge: null,
     heading: "아티스트의 사운드를\n완성합니다",
-    body: "곡의 감정을 살리는 믹싱, 어떤 플랫폼에서 들어도 흔들리지 않는 마스터링. 음악의 완성은 사운드에 있습니다.",
+    body: "곡의 감정을 살리는 믹싱, 어떤 플랫폼에서 들어도 흔들리지 않는 마스터링.\n음악의 완성은 사운드에 있습니다.",
     features: ["LUFS 맞춤 마스터링", "최고급 스튜디오 장비 보유", "스템 납품 가능"],
     image: "daw",
   },
@@ -55,7 +58,7 @@ function Slideshow({ slides }: { slides: { src: string; alt: string }[] }) {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrent((c) => (c + 1) % slides.length);
-    }, 3000);
+    }, 2000);
     return () => clearInterval(timer);
   }, [slides.length]);
 
@@ -91,7 +94,7 @@ function AlbumSlideshow() {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrent((c) => (c + 1) % ALBUM_SLIDES.length);
-    }, 3000);
+    }, 2000);
     return () => clearInterval(timer);
   }, []);
 
@@ -106,7 +109,7 @@ function AlbumSlideshow() {
           {/* 블러 배경 */}
           <Image src={slide.src} alt="" fill className="object-cover scale-110" style={{ filter: "blur(24px)", opacity: 0.6 }} />
           {/* 앨범 커버 */}
-          <Image src={slide.src} alt={slide.alt} width={280} height={280} className="relative rounded-xl z-10" style={{ objectFit: "contain" }} />
+          <Image src={slide.src} alt={slide.alt} width={480} height={480} className="relative rounded-xl z-10" style={{ objectFit: "contain" }} />
         </div>
       ))}
       {/* 도트 */}
@@ -138,31 +141,48 @@ function PlaceholderImage() {
   );
 }
 
-export default function ServiceTabs({ filter }: { filter?: "business" | "artist" }) {
-  const filtered = filter === "business"
+export default function ServiceTabs({ filter }: { filter?: "brand" | "artist" }) {
+  const filtered = filter === "brand"
     ? SERVICES.filter((s) => s.number === "01")
     : filter === "artist"
     ? SERVICES.filter((s) => s.number === "02" || s.number === "03")
     : SERVICES;
 
   return (
-    <section id="services" className="max-w-6xl mx-auto px-6 py-28">
-      <p className="text-xs tracking-widest uppercase mb-4" style={{ color: "var(--fg-subtle)" }}>Services</p>
-      <h2 className="text-4xl md:text-5xl font-black mb-24 leading-tight" style={{ color: "var(--fg)" }}>
-        어떤 음악이 필요하세요?
-      </h2>
+    <section id="services" className={`max-w-6xl mx-auto px-6 py-28 ${!!filter ? "text-center" : ""}`}>
+      {!filter && (
+        <>
+          <p className="text-xs tracking-widest uppercase mb-4" style={{ color: "var(--fg-subtle)" }}>Services</p>
+          <h2 className="text-4xl md:text-5xl font-black mb-24 leading-tight whitespace-pre-line" style={{ color: "var(--fg)" }}>
+            어떤 음악이 필요하세요?
+          </h2>
+        </>
+      )}
+      {filter === "brand" && (
+        <>
+          <p className="text-xs tracking-widest uppercase mb-4" style={{ color: "var(--fg-subtle)" }}>Services</p>
+          <h2 className="text-4xl md:text-5xl font-black mb-24 leading-tight whitespace-pre-line" style={{ color: "var(--fg)" }}>
+            브랜드의 첫인상은{"\n"}
+            <span style={{ background: "linear-gradient(transparent 65%, #F5C842 65%)" }}>
+              음악으로 완성됩니다.
+            </span>
+          </h2>
+        </>
+      )}
 
       <div className="flex flex-col gap-32">
         {filtered.map((s, i) => {
           const displayNum = String(i + 1).padStart(2, "0");
-          return (
-          <div
-            key={s.number}
-            className={`grid md:grid-cols-2 gap-16 items-center ${i % 2 === 1 ? "md:[&>*:first-child]:order-2" : ""}`}
-          >
+          const imageEl = s.image === "floating" ? <Slideshow slides={SLIDES} /> : s.image === "albums" ? <AlbumSlideshow /> : s.image === "daw" ? (
+            <div className="rounded-2xl aspect-video relative overflow-hidden">
+              <Image src="/thumbnails/daw.png" alt="DAW 작업 화면" fill className="object-cover" />
+            </div>
+          ) : <PlaceholderImage />;
+
+          const textEl = (
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <span className="text-xs font-mono tracking-widest" style={{ color: "var(--fg-subtle)" }}>{displayNum}</span>
+                {filter !== "brand" && <span className="text-xs font-mono tracking-widest" style={{ color: "var(--fg-subtle)" }}>{displayNum}</span>}
                 {s.badge && (
                   <span
                     className="px-2.5 py-0.5 rounded-full border text-xs"
@@ -172,12 +192,20 @@ export default function ServiceTabs({ filter }: { filter?: "business" | "artist"
                   </span>
                 )}
               </div>
-              <p className="inline-block text-sm font-bold mb-4 px-3 py-1 rounded-full" style={{ background: "#F5C842", color: "#111" }}>{s.label}</p>
+              {s.tags ? (
+                <div className={`flex flex-wrap gap-2 mb-4 ${!!filter ? "justify-center" : ""}`}>
+                  {s.tags.map((tag) => (
+                    <span key={tag} className="text-xs font-bold px-3 py-1 rounded-full" style={{ background: "#F5C842", color: "#111" }}>{tag}</span>
+                  ))}
+                </div>
+              ) : (
+                <p className="inline-block text-sm font-bold mb-4 px-3 py-1 rounded-full" style={{ background: "#F5C842", color: "#111" }}>{s.label}</p>
+              )}
               <h3 className="text-3xl md:text-4xl font-black mb-6 leading-snug whitespace-pre-line" style={{ color: "var(--fg)" }}>
                 {s.heading}
               </h3>
-              <p className="leading-relaxed mb-8 text-base" style={{ color: "var(--fg-muted)" }}>{s.body}</p>
-              <ul className="space-y-3 text-sm" style={{ color: "var(--fg-subtle)" }}>
+              <p className="leading-relaxed mb-8 text-base whitespace-pre-line" style={{ color: "var(--fg-muted)" }}>{s.body}</p>
+              <ul className={`space-y-3 ${!!filter ? "text-base inline-flex flex-col items-start" : "text-sm"}`} style={{ color: "var(--fg-subtle)" }}>
                 {s.features.map((f) => (
                   <li key={f} className="flex items-center gap-3">
                     <span style={{ color: "var(--fg-muted)" }}>✓</span> {f}
@@ -185,13 +213,27 @@ export default function ServiceTabs({ filter }: { filter?: "business" | "artist"
                 ))}
               </ul>
             </div>
+          );
 
-            {s.image === "floating" ? <Slideshow slides={SLIDES} /> : s.image === "albums" ? <AlbumSlideshow /> : s.image === "daw" ? (
-              <div className="rounded-2xl aspect-video relative overflow-hidden">
-                <Image src="/thumbnails/daw.png" alt="DAW 작업 화면" fill className="object-cover" />
+          if (!!filter) {
+            return (
+              <div key={s.number} className="flex flex-col gap-10">
+                <div className="w-full rounded-2xl overflow-hidden aspect-video relative">
+                  {imageEl}
+                </div>
+                {textEl}
               </div>
-            ) : <PlaceholderImage />}
-          </div>
+            );
+          }
+
+          return (
+            <div
+              key={s.number}
+              className={`grid md:grid-cols-2 gap-16 items-center ${i % 2 === 1 ? "md:[&>*:first-child]:order-2" : ""}`}
+            >
+              {textEl}
+              {imageEl}
+            </div>
           );
         })}
       </div>

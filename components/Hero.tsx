@@ -110,15 +110,15 @@ export default function Hero() {
 
         <div className="fade-up delay-3 flex flex-wrap justify-center gap-3">
           <a
-            href="/services/business"
-            className="px-6 py-3 text-sm font-semibold rounded-full transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 active:scale-95"
+            href="/services/brand"
+            className="px-10 py-4 text-base font-semibold rounded-full transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 active:scale-95"
             style={{ background: "var(--fg)", color: "var(--bg)" }}
           >
             브랜드 사운드 →
           </a>
           <a
             href="/services/artist"
-            className="px-6 py-3 border text-sm rounded-full transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md active:translate-y-0 active:scale-95"
+            className="px-10 py-4 border text-base rounded-full transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md active:translate-y-0 active:scale-95"
             style={{ borderColor: "var(--border)", color: "var(--fg-muted)" }}
           >
             아티스트 서비스 →

@@ -12,8 +12,8 @@ export default function ServicesArtistPage() {
     <>
       <Nav />
       <main className="pt-16">
-        <ServiceTabs filter="artist" />
         <ArtistDetails />
+        <ServiceTabs filter="artist" />
       </main>
       <Footer />
     </>

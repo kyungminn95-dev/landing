@@ -4,15 +4,15 @@ import Guide from "@/components/Guide";
 import Footer from "@/components/Footer";
 
 export const metadata = {
-  title: "비즈니스 서비스 — 뮤잇",
+  title: "브랜드 서비스 — 뮤잇",
 };
 
-export default function ServicesBusinessPage() {
+export default function ServicesBrandPage() {
   return (
     <>
       <Nav />
       <main className="pt-16">
-        <ServiceTabs filter="business" />
+        <ServiceTabs filter="brand" />
         <Guide />
       </main>
       <Footer />

@@ -4,8 +4,8 @@ import { useState } from "react";
 import { sendEmail } from "@/app/actions/sendEmail";
 
 const CATEGORIES = {
-  "상업음악": ["광고음악", "로고송", "BGM", "징글", "동요"],
-  "음악 제작": ["작편곡", "스트링 편곡", "연주", "믹싱/마스터링"],
+  "Brand": ["광고음악", "로고송", "BGM", "징글", "동요"],
+  "Artist": ["작편곡", "스트링 편곡", "연주", "믹싱/마스터링"],
 } as const;
 
 type MainCat = keyof typeof CATEGORIES;
