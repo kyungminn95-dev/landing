@@ -68,7 +68,7 @@ export default function Nav() {
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between md:grid md:grid-cols-3">
 
         {/* Left — Logo */}
-        <Link href="/" className="flex items-center gap-1.5">
+        <Link href="https://muit.kr" className="flex items-center gap-1.5">
           <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
             <ellipse cx="17" cy="17" rx="11" ry="5" fill="#F5C842" transform="rotate(-45 17 17)"/>
             <ellipse cx="13" cy="13" rx="11" ry="5" fill="#111" transform="rotate(-45 13 13)"/>

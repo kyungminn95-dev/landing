@@ -20,7 +20,7 @@ const SERVICES = [
     tags: null,
     badge: null,
     heading: "아티스트의 음악을\n함께 만듭니다",
-    body: "가요, 발라드, 팝, 어쿠스틱까지. 아티스트의 색깔을 살린 작편곡과 스트링 편곡을 제공합니다. 단순한 반주를 넘어 곡의 감정을 설계합니다.",
+    body: "가요, 발라드, 팝, 어쿠스틱까지. 아티스트의 색깔을 살린 작편곡과 스트링 편곡을 제공합니다.\n단순한 반주를 넘어 곡의 감정을 설계합니다.",
     features: ["가요 · 발라드 · 팝 작편곡", "스트링 편곡 전문", "녹음실 · 보컬 디렉팅 연계 가능"],
     image: "albums",
   },
@@ -181,7 +181,7 @@ export default function ServiceTabs({ filter }: { filter?: "brand" | "artist" })
 
           const textEl = (
             <div>
-              <div className="flex items-center gap-3 mb-4">
+              <div className={`flex items-center gap-3 mb-4 ${!!filter ? "justify-center" : ""}`}>
                 {filter !== "brand" && <span className="text-xs font-mono tracking-widest" style={{ color: "var(--fg-subtle)" }}>{displayNum}</span>}
                 {s.badge && (
                   <span
