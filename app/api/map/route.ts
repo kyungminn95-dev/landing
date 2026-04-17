@@ -18,7 +18,9 @@ export async function GET() {
   });
 
   if (!res.ok) {
-    return new NextResponse("Map fetch failed", { status: 500 });
+    const errText = await res.text();
+    console.error("Naver Map error:", res.status, errText);
+    return new NextResponse(`Map fetch failed: ${res.status} ${errText}`, { status: 500 });
   }
 
   const buffer = await res.arrayBuffer();
