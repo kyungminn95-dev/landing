@@ -204,27 +204,9 @@ export default function Portfolio() {
         ))}
       </div>
 
-      {/* 서브 필터 */}
-      <div className="flex flex-wrap gap-2 mb-10">
-        {TABS[tab].map((l) => (
-          <button
-            key={l}
-            onClick={() => setFilter(l)}
-            className="px-4 py-1.5 rounded-full text-sm font-medium border transition-colors"
-            style={{
-              borderColor: filter === l ? "var(--fg)" : "var(--border)",
-              background:  filter === l ? "var(--fg)"  : "transparent",
-              color:       filter === l ? "var(--bg)"  : "var(--fg-muted)",
-            }}
-          >
-            {l}
-          </button>
-        ))}
-      </div>
-
       {/* 그리드 */}
       <div className="grid md:grid-cols-2 gap-5">
-        {filtered.map((item) => (
+        {[...items].sort((a, b) => order.indexOf(a.label) - order.indexOf(b.label)).map((item) => (
           <Card
             key={item.type === "youtube" ? item.id : item.src}
             item={item}
