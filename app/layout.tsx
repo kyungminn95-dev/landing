@@ -32,6 +32,11 @@ export const metadata: Metadata = {
     title: "뮤잇 — 브랜드의 음악을 설계합니다",
     description: "광고음악, 로고송, BGM부터 믹싱·마스터링까지. 10년 경력의 뮤잇이 함께합니다.",
   },
+  verification: {
+    other: {
+      "naver-site-verification": "abe037f88ba4b615ec2b9fa4f1ce80fd2339874a",
+    },
+  },
 };
 
 export default function RootLayout({
