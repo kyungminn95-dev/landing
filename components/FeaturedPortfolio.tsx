@@ -15,6 +15,10 @@ const ITEMS: Item[] = [
   { type: "youtube", id: "FSU7rI38CC4", title: "뽀싱TV — 똥을 만들어요", label: "동요", views: "150만" },
   { type: "video",   src: "/videos/ihq-still-alive.mp4", title: "IHQ 'Still Alive' 오프닝 타이틀", label: "광고음악", thumbnail: "/thumbnails/ihq-still-alive.jpg" },
   { type: "youtube", id: "M2QoPbtMjHo", title: "하남시 — 하남이와 방울이", label: "로고송" },
+  { type: "youtube", id: "6jV3-EByGmQ", title: "Dept — Into the Dream", label: "작편곡" },
+  { type: "youtube", id: "UO39v_H74S0", title: "티빙 — '브로앤마블' OST", label: "BGM" },
+  { type: "youtube", id: "_EvjyXDGM5w", title: "Dept — Van Gogh (Feat. Ashley Alisha)", label: "스트링 편곡" },
+  { type: "youtube", id: "mDSE4FrpiBw", title: "조은세 — 하루의 정원", label: "연주" },
 ];
 
 /* ── 모달 ── */
