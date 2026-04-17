@@ -13,7 +13,7 @@ export async function GET(request: Request) {
     const fontData = await fetch(
       "https://fonts.gstatic.com/s/notosanskr/v36/PbyxFmXiEBPT4ITbgNA5Cgms3VYcOA-vvnIzzuoyeLTq8H4hfeE.woff2"
     ).then((r) => r.arrayBuffer());
-    fonts = [{ name: "NotoKR", data: fontData, weight: 700 }];
+    fonts = [{ name: "NotoKR", data: fontData, weight: 700 as const }];
   } catch {}
 
   const fontFamily = fonts.length ? "NotoKR" : "sans-serif";
