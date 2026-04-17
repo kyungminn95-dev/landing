@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Noto_Sans_KR, Inter } from "next/font/google";
-import Script from "next/script";
 import "./globals.css";
 
 const notoSansKr = Noto_Sans_KR({
@@ -38,11 +37,56 @@ export default function RootLayout({
       </head>
       <body className="antialiased" style={{ fontFamily: "var(--font-noto), var(--font-inter), sans-serif" }}>
         {children}
-        <Script id="channel-io" strategy="afterInteractive">{`
-          (function(){var w=window;if(w.ChannelIO){return w.console.error("ChannelIO script included twice.")}var ch=function(){ch.c(arguments)};ch.q=[];ch.c=function(args){ch.q.push(args)};w.ChannelIO=ch;function l(){if(w.ChannelIOInitialized){return}w.ChannelIOInitialized=true;var s=document.createElement("script");s.type="text/javascript";s.async=true;s.src="https://cdn.channel.io/plugin/ch-plugin-web.js";var x=document.getElementsByTagName("script")[0];x.parentNode.insertBefore(s,x)}if(document.readyState==="complete"){l()}else{w.addEventListener("DOMContentLoaded",l);w.addEventListener("load",l)}})();
-          ChannelIO('boot', { pluginKey: '19e86945-2340-4493-9468-1bfbfe38615e' });
-          if (window.innerWidth < 768) { ChannelIO('hideMessenger'); }
-        `}</Script>
+        {/* 카카오 오픈채팅 플로팅 버튼 */}
+        <div style={{ position: "fixed", bottom: "24px", right: "24px", zIndex: 9999, display: "flex", flexDirection: "column", alignItems: "center", gap: "8px" }}>
+          {/* 말풍선 */}
+          <div style={{
+            background: "#FEE500",
+            color: "#3C1E1E",
+            fontSize: "11px",
+            fontWeight: 700,
+            padding: "4px 10px",
+            borderRadius: "12px",
+            whiteSpace: "nowrap",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.12)",
+            position: "relative",
+          }}>
+            빠른 문의
+            <span style={{
+              position: "absolute",
+              bottom: "-5px",
+              left: "50%",
+              transform: "translateX(-50%)",
+              width: 0,
+              height: 0,
+              borderLeft: "5px solid transparent",
+              borderRight: "5px solid transparent",
+              borderTop: "5px solid #FEE500",
+            }} />
+          </div>
+          {/* 버튼 */}
+          <a
+            href="https://open.kakao.com/me/muit"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="카카오톡 오픈채팅"
+            style={{
+              width: "64px",
+              height: "64px",
+              borderRadius: "50%",
+              background: "#FEE500",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 4px 16px rgba(0,0,0,0.15)",
+              textDecoration: "none",
+            }}
+          >
+            <svg width="34" height="32" viewBox="0 0 26 24" fill="none">
+              <path fillRule="evenodd" clipRule="evenodd" d="M13 0C5.82 0 0 4.716 0 10.534c0 3.74 2.388 7.02 5.99 8.942L4.42 24l5.8-3.254A15.7 15.7 0 0013 21.07c7.18 0 13-4.718 13-10.536C26 4.716 20.18 0 13 0z" fill="#3C1E1E"/>
+            </svg>
+          </a>
+        </div>
       </body>
     </html>
   );
