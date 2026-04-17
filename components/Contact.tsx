@@ -1,3 +1,5 @@
+import Script from "next/script";
+
 export default function Contact() {
   return (
     <section id="contact" className="border-t" style={{ borderColor: "var(--border)" }}>
@@ -5,21 +7,11 @@ export default function Contact() {
         <p className="text-xs tracking-widest uppercase mb-10" style={{ color: "var(--fg-subtle)" }}>Contact</p>
 
         {/* 지도 */}
-        <a
-          href="https://map.naver.com/v5/search/서울시+마포구+독막로6길+6"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block rounded-2xl overflow-hidden mb-10"
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/api/map"
-            alt="스튜디오 위치 지도"
-            width="800"
-            height="400"
-            style={{ width: "100%", height: "360px", objectFit: "cover", display: "block" }}
-          />
-        </a>
+        <div className="rounded-2xl overflow-hidden mb-10" style={{ height: "360px" }}>
+          <div id="daumRoughmapContainer1776394601661" className="root_daum_roughmap root_daum_roughmap_landing" style={{ width: "100%", height: "100%" }} />
+          <Script src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js" strategy="afterInteractive" />
+          <Script id="kakao-map" strategy="afterInteractive">{`new daum.roughmap.Lander({"timestamp":"1776394601661","key":"2aeiorcmz2ei","mapWidth":"640","mapHeight":"360"}).render();`}</Script>
+        </div>
 
         {/* 정보 */}
         <div className="flex flex-col items-center gap-6">
