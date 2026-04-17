@@ -1,9 +1,5 @@
 @import "tailwindcss";
 
-/* class-based dark mode for Tailwind v4 */
-@variant dark (&:where(.dark, .dark *));
-
-/* ── Light mode (default) ── */
 :root {
   --bg: #f2f2f2;
   --fg: #111111;
@@ -16,18 +12,6 @@
   --scrollbar-thumb: #ccc;
 }
 
-/* ── Dark mode ── */
-.dark {
-  --bg: #080808;
-  --fg: #f0f0f0;
-  --fg-muted: rgba(240,240,240,0.5);
-  --fg-subtle: rgba(240,240,240,0.3);
-  --border: rgba(255,255,255,0.08);
-  --nav-bg: rgba(8,8,8,0.75);
-  --card-bg: rgba(255,255,255,0.03);
-  --scrollbar-track: #111;
-  --scrollbar-thumb: #333;
-}
 
 * {
   -webkit-font-smoothing: antialiased;

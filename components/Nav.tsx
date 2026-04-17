@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import Link from "next/link";
 
 const links = [
@@ -12,40 +12,33 @@ const serviceLinks = [
   { href: "/services/artist", label: "Artist", sub: "믹싱 · 마스터링 · 편곡" },
 ];
 
-function SunIcon() {
+function ShareIcon() {
   return (
     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <circle cx="12" cy="12" r="4" strokeWidth={2}/>
-      <path strokeLinecap="round" strokeWidth={2} d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
-    </svg>
-  );
-}
-
-function MoonIcon() {
-  return (
-    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/>
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
     </svg>
   );
 }
 
 export default function Nav() {
-  const [dark, setDark] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
   const servicesTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // 초기 테마 읽기
-  useEffect(() => {
-    setDark(document.documentElement.classList.contains("dark"));
-  }, []);
-
-  const toggleTheme = () => {
-    const next = !dark;
-    setDark(next);
-    document.documentElement.classList.toggle("dark", next);
-    localStorage.setItem("theme", next ? "dark" : "light");
+  const handleShare = async () => {
+    const url = "https://muit.kr";
+    const title = "뮤잇 — 브랜드의 음악을 설계합니다";
+    if (navigator.share) {
+      try {
+        await navigator.share({ title, url });
+      } catch {}
+    } else {
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
   };
 
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -142,16 +135,20 @@ export default function Nav() {
           ))}
         </div>
 
-        {/* Right — Theme toggle + Contact */}
+        {/* Right — Share + Contact */}
         <div className="flex items-center justify-end gap-3">
-          {/* Theme toggle */}
+          {/* Share button */}
           <button
-            onClick={toggleTheme}
-            className="w-8 h-8 flex items-center justify-center rounded-full transition-colors"
-            style={{ color: "var(--fg-muted)" }}
-            aria-label="테마 전환"
+            onClick={handleShare}
+            className="w-8 h-8 flex items-center justify-center rounded-full transition-colors relative"
+            style={{ color: copied ? "var(--fg)" : "var(--fg-muted)" }}
+            aria-label="공유하기"
           >
-            {dark ? <SunIcon /> : <MoonIcon />}
+            {copied ? (
+              <span className="text-xs font-medium" style={{ color: "var(--fg)" }}>✓</span>
+            ) : (
+              <ShareIcon />
+            )}
           </button>
 
           {/* Contact — desktop */}
