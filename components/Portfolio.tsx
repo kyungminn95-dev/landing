@@ -22,6 +22,7 @@ const CATEGORY_ORDER: Record<TabKey, string[]> = {
 const ITEMS: Record<TabKey, Item[]> = {
   "Brand": [
     { type: "youtube", id: "Dz5KIa-opgE",  title: "농림축산식품부 — 축산물 PLS",          label: "광고음악", tags: ["광고음악", "징글"], views: "120만" },
+    { type: "video",   src: "/videos/cj-ashora.mp4",  title: "CJ 온스타일 — 아쇼라 오프닝 곡", label: "광고음악", thumbnail: "/thumbnails/cj-ashora.jpg" },
     { type: "video",   src: "/videos/cj-gabi.mov",    title: "CJ 온스타일 — 가비",        label: "광고음악", thumbnail: "/thumbnails/cj-gabi.jpg" },
     { type: "video",   src: "/videos/cj-busters.mov", title: "CJ 온스타일 — 버스터즈",     label: "광고음악", thumbnail: "/thumbnails/cj-busters.jpg" },
     { type: "video",   src: "/videos/ihq-still-alive.mp4", title: "IHQ 'Still Alive' 오프닝 타이틀", label: "광고음악", thumbnail: "/thumbnails/ihq-still-alive.jpg" },
