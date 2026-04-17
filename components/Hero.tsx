@@ -119,7 +119,7 @@ export default function Hero() {
           <a
             href="/services/artist"
             className="px-10 py-4 border text-base rounded-full transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md active:translate-y-0 active:scale-95"
-            style={{ borderColor: "var(--border)", color: "var(--fg-muted)" }}
+            style={{ borderColor: "#000", color: "#000", borderWidth: "2px" }}
           >
             아티스트 서비스 →
           </a>
