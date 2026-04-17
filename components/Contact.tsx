@@ -1,50 +1,29 @@
-"use client";
-
-import { useEffect } from "react";
-
 export default function Contact() {
-  useEffect(() => {
-    // React 관리 밖에서 컨테이너 생성
-    const wrapper = document.getElementById("kakao-map-wrapper");
-    if (!wrapper) return;
-
-    const container = document.createElement("div");
-    container.id = "daumRoughmapContainer1776394601661";
-    container.className = "root_daum_roughmap root_daum_roughmap_landing";
-    wrapper.appendChild(container);
-
-    const loader = document.createElement("script");
-    loader.src = "https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js";
-    loader.charset = "UTF-8";
-    document.body.appendChild(loader);
-
-    const interval = setInterval(() => {
-      // @ts-expect-error daum is loaded globally
-      if (window.daum?.roughmap?.Lander) {
-        clearInterval(interval);
-        // @ts-expect-error daum is loaded globally
-        new window.daum.roughmap.Lander({
-          timestamp: "1776394601661",
-          key: "2aeiorcmz2ei",
-          mapWidth: "640",
-          mapHeight: "360",
-        }).render();
-      }
-    }, 100);
-
-    return () => {
-      clearInterval(interval);
-      container.remove();
-    };
-  }, []);
-
   return (
     <section id="contact" className="border-t" style={{ borderColor: "var(--border)" }}>
       <div className="max-w-3xl mx-auto px-6 py-24 text-center">
         <p className="text-xs tracking-widest uppercase mb-10" style={{ color: "var(--fg-subtle)" }}>Contact</p>
 
         {/* 지도 */}
-        <div id="kakao-map-wrapper" className="rounded-2xl overflow-hidden mb-10" style={{ minHeight: "360px" }} />
+        <div className="rounded-2xl overflow-hidden mb-10" style={{ width: "100%", color: "#333", position: "relative" }}>
+          <a href="https://map.kakao.com/?urlX=481763.0000000028&urlY=1124518.999999999&name=%EC%84%9C%EC%9A%B8%20%EB%A7%88%ED%8F%AC%EA%B5%AC%20%EB%8F%85%EB%A7%89%EB%A1%9C6%EA%B8%B8%206&map_type=TYPE_MAP&from=roughmap" target="_blank" rel="noopener noreferrer">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="http://t1.daumcdn.net/roughmap/imgmap/b8b9518135ef0340dce48dbc0a915fcc8bff52275b38081cfde8b33fe9599637"
+              alt="서울 마포구 독막로6길 6 지도"
+              width="638"
+              height="358"
+              style={{ width: "100%", height: "360px", objectFit: "cover", border: "1px solid #ccc", display: "block" }}
+            />
+          </a>
+          <div style={{ overflow: "hidden", padding: "7px 11px", border: "1px solid rgba(0,0,0,0.1)", borderTop: 0, background: "#f9f9f9", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <a href="https://map.kakao.com" target="_blank" rel="noopener noreferrer">
+              <img src="//t1.kakaocdn.net/localimg/localimages/07/2018/pc/common/logo_kakaomap.png" width="72" height="16" alt="카카오맵" />
+            </a>
+            <a target="_blank" rel="noopener noreferrer" href="https://map.kakao.com/?from=roughmap&eName=%EC%84%9C%EC%9A%B8%20%EB%A7%88%ED%8F%AC%EA%B5%AC%20%EB%8F%85%EB%A7%89%EB%A1%9C6%EA%B8%B8%206&eX=481763.0000000028&eY=1124518.999999999" style={{ fontSize: "11px", color: "#000", textDecoration: "none" }}>길찾기</a>
+          </div>
+        </div>
 
         {/* 정보 */}
         <div className="flex flex-col items-center gap-6">
