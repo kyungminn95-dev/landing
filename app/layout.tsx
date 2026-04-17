@@ -47,6 +47,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className={`${notoSansKr.variable} ${inter.variable} scroll-smooth`}>
+      <head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18097462656" />
+        <script dangerouslySetInnerHTML={{ __html: `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'AW-18097462656');
+        `}} />
+      </head>
 
       <body className="antialiased" style={{ fontFamily: "var(--font-noto), var(--font-inter), sans-serif" }}>
         <SparkWrapper>
