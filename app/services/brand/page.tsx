@@ -4,7 +4,8 @@ import Guide from "@/components/Guide";
 import Footer from "@/components/Footer";
 
 export const metadata = {
-  title: "브랜드 서비스 — 뮤잇",
+  title: "광고음악 · 로고송 · BGM 제작 | 뮤잇",
+  description: "CJ, 농림축산식품부 등 국내 주요 브랜드와 10년간 함께한 뮤잇. 광고음악, 로고송, CM송, BGM, 징글을 레퍼런스 하나로 빠르고 정확하게 제작합니다.",
 };
 
 export default function ServicesBrandPage() {
