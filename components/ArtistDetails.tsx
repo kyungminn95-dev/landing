@@ -212,7 +212,26 @@ export default function ArtistDetails() {
             ))}
           </div>
 
-          <div className="mt-6 flex flex-col gap-1">
+          {/* 구독자 할인 */}
+          <div className="mt-6">
+            <a
+              href="https://open.kakao.com/me/muit"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-xs font-bold"
+              style={{ color: "var(--fg)" }}
+            >
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style={{ background: "#F5C842" }} />
+                <span className="relative inline-flex rounded-full h-2 w-2" style={{ background: "#F5C842" }} />
+              </span>
+              유튜브 구독자 할인 중
+              <span style={{ opacity: 0.3 }}>|</span>
+              빠른 문의 →
+            </a>
+          </div>
+
+          <div className="mt-4 flex flex-col gap-1">
             <p className="text-xs" style={{ color: "var(--fg-subtle)" }}>* 트랙 수, 장르, 작업 복잡도에 따라 달라질 수 있습니다. 별도 문의 항목은 상담 후 안내드립니다.</p>
             <p className="text-xs" style={{ color: "var(--fg-subtle)" }}>* 세트 작업시 할인됩니다. (별도 문의)</p>
             <p className="text-xs" style={{ color: "var(--fg-subtle)" }}>* 세금 계산서 발행시 부가세 별도</p>
