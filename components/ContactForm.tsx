@@ -4,9 +4,15 @@ import { useState } from "react";
 import { sendEmail } from "@/app/actions/sendEmail";
 
 const CATEGORIES = {
-  "Brand": ["광고음악", "로고송", "BGM", "징글", "동요"],
-  "Artist": ["작편곡", "스트링 편곡", "연주", "믹싱/마스터링"],
+  "Brand": ["광고음악", "로고송/징글", "BGM/사운드", "동요/교육", "공공기관/행사"],
+  "Artist": ["믹싱/마스터링", "스트링 편곡", "보컬 튠", "싱글 패키지", "작곡/편곡 문의"],
 } as const;
+
+const PLACEHOLDERS = {
+  "Brand": "제작 목적(TV CF, 유튜브 광고 등), 희망 레퍼런스, 마감 기한을 적어주세요.",
+  "Artist": "장르, 트랙 수(멀티), 스트링 포함 여부, 발매 예정일을 적어주세요.",
+  "": "제작하시려는 곡의 분위기나 장르, 러닝타임, 사용용도 등 최대한 많은 정보를 알려주시면 신속하게 회신드리겠습니다.",
+};
 
 type MainCat = keyof typeof CATEGORIES;
 
@@ -81,39 +87,41 @@ export default function ContactForm() {
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
 
         {/* 카테고리 */}
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 mb-2">
           <p className="text-xs tracking-widest uppercase" style={{ color: "var(--fg-subtle)" }}>카테고리</p>
-          {/* 대분류 */}
-          <div className="flex gap-2">
+
+          {/* 대분류 — 탭 스타일 */}
+          <div className="flex gap-2 p-1 rounded-xl w-fit" style={{ background: "var(--card-bg)" }}>
             {(Object.keys(CATEGORIES) as MainCat[]).map((cat) => (
               <button
                 key={cat}
                 type="button"
                 onClick={() => handleMainCat(cat)}
-                className="px-4 py-2 rounded-full text-sm border transition-all"
+                className="px-6 py-2 rounded-lg text-sm font-semibold transition-all"
                 style={{
-                  background: mainCat === cat ? "var(--fg)" : "var(--bg)",
+                  background: mainCat === cat ? "var(--fg)" : "transparent",
                   color: mainCat === cat ? "var(--bg)" : "var(--fg-muted)",
-                  borderColor: mainCat === cat ? "var(--fg)" : "var(--border)",
                 }}
               >
                 {cat}
               </button>
             ))}
           </div>
+
           {/* 소분류 */}
           {mainCat && (
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 mt-1">
               {CATEGORIES[mainCat].map((sub) => (
                 <button
                   key={sub}
                   type="button"
                   onClick={() => setSubCat(sub === subCat ? "" : sub)}
-                  className="px-3 py-1.5 rounded-full text-sm border transition-all"
+                  className="px-3 py-1.5 rounded-full text-xs border transition-all"
                   style={{
-                    background: subCat === sub ? "var(--fg)" : "var(--bg)",
-                    color: subCat === sub ? "var(--bg)" : "var(--fg-muted)",
-                    borderColor: subCat === sub ? "var(--fg)" : "var(--border)",
+                    background: subCat === sub ? "#F5C842" : "var(--bg)",
+                    color: subCat === sub ? "#111" : "var(--fg-muted)",
+                    borderColor: subCat === sub ? "#F5C842" : "var(--border)",
+                    fontWeight: subCat === sub ? 600 : 400,
                   }}
                 >
                   {sub}
@@ -147,7 +155,7 @@ export default function ContactForm() {
         />
         <textarea
           required name="message"
-          placeholder={"문의내용*        제작하시려는 곡의 분위기나 장르, 러닝타임, 사용용도 등 최대한 많은 정보를 알려주시면 신속하게 회신드리겠습니다."}
+          placeholder={`문의내용*\n${PLACEHOLDERS[mainCat]}`}
           value={form.message} onChange={handleChange}
           rows={8} className={`${inputClass} resize-none`} style={inputStyle}
           onFocus={e => (e.currentTarget.style.borderColor = "var(--fg-muted)")}
@@ -170,9 +178,10 @@ export default function ContactForm() {
           disabled={!agreed || loading}
           className="mt-2 w-full py-4 rounded-lg text-sm font-bold transition-all"
           style={{
-            background: agreed && !loading ? "var(--fg)" : "var(--border)",
+            background: agreed && !loading ? "var(--fg)" : "var(--card-bg)",
             color: agreed && !loading ? "var(--bg)" : "var(--fg-subtle)",
             cursor: agreed && !loading ? "pointer" : "not-allowed",
+            border: agreed && !loading ? "none" : "1px solid var(--border)",
           }}
         >
           {loading ? "전송 중..." : "문의보내기"}
