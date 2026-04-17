@@ -4,6 +4,15 @@ import { useEffect } from "react";
 
 export default function Contact() {
   useEffect(() => {
+    // React 관리 밖에서 컨테이너 생성
+    const wrapper = document.getElementById("kakao-map-wrapper");
+    if (!wrapper) return;
+
+    const container = document.createElement("div");
+    container.id = "daumRoughmapContainer1776394601661";
+    container.className = "root_daum_roughmap root_daum_roughmap_landing";
+    wrapper.appendChild(container);
+
     const loader = document.createElement("script");
     loader.src = "https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js";
     loader.charset = "UTF-8";
@@ -23,7 +32,10 @@ export default function Contact() {
       }
     }, 100);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      container.remove();
+    };
   }, []);
 
   return (
@@ -32,9 +44,7 @@ export default function Contact() {
         <p className="text-xs tracking-widest uppercase mb-10" style={{ color: "var(--fg-subtle)" }}>Contact</p>
 
         {/* 지도 */}
-        <div className="rounded-2xl overflow-hidden mb-10">
-          <div id="daumRoughmapContainer1776394601661" className="root_daum_roughmap root_daum_roughmap_landing" />
-        </div>
+        <div id="kakao-map-wrapper" className="rounded-2xl overflow-hidden mb-10" style={{ minHeight: "360px" }} />
 
         {/* 정보 */}
         <div className="flex flex-col items-center gap-6">
