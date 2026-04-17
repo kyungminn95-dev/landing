@@ -13,9 +13,15 @@ export async function GET(request: Request) {
   const width = 1200;
   const height = square ? 1200 : 628;
 
-  const fontBold = await fetch(
-    "https://fonts.gstatic.com/s/notosanskr/v36/PbyxFmXiEBPT4ITbgNA5Cgms3VYcOA-vvnIzzuoyeLTq8H4hfeE.woff2"
-  ).then((r) => r.arrayBuffer());
+  let fonts: { name: string; data: ArrayBuffer; weight: number }[] = [];
+  try {
+    const fontData = await fetch(
+      "https://fonts.gstatic.com/s/notosanskr/v36/PbyxFmXiEBPT4ITbgNA5Cgms3VYcOA-vvnIzzuoyeLTq8H4hfeE.woff2"
+    ).then((r) => r.arrayBuffer());
+    fonts = [{ name: "NotoKR", data: fontData, weight: 700 }];
+  } catch {}
+
+  const fontFamily = fonts.length ? "NotoKR" : "sans-serif";
 
   return new ImageResponse(
     (
@@ -29,8 +35,8 @@ export async function GET(request: Request) {
           alignItems: "center",
           justifyContent: "center",
           padding: square ? "80px" : "60px 80px",
-          fontFamily: "Noto Sans KR",
-          gap: square ? "56px" : "40px",
+          fontFamily,
+          gap: square ? "52px" : "36px",
         }}
       >
         {/* 로고 */}
@@ -45,11 +51,11 @@ export async function GET(request: Request) {
         </div>
 
         {/* 헤드라인 */}
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "16px" }}>
-          <div style={{ color: "#111", fontSize: square ? "64px" : "52px", fontWeight: 900, letterSpacing: "-1.5px" }}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "14px" }}>
+          <div style={{ color: "#111", fontSize: square ? "62px" : "50px", fontWeight: 900, letterSpacing: "-1.5px" }}>
             함께한 클라이언트
           </div>
-          <div style={{ color: "#888", fontSize: square ? "28px" : "22px", fontWeight: 400 }}>
+          <div style={{ color: "#888", fontSize: square ? "26px" : "21px" }}>
             10년간 주요 브랜드와 함께해온 음악 제작 파트너
           </div>
         </div>
@@ -59,7 +65,7 @@ export async function GET(request: Request) {
           style={{
             display: "flex",
             flexWrap: "wrap",
-            gap: "14px",
+            gap: "12px",
             justifyContent: "center",
             maxWidth: "900px",
           }}
@@ -72,9 +78,10 @@ export async function GET(request: Request) {
                 border: "1.5px solid #e0e0e0",
                 borderRadius: "100px",
                 padding: "12px 28px",
-                fontSize: square ? "26px" : "22px",
+                fontSize: square ? "26px" : "21px",
                 fontWeight: 700,
                 color: "#333",
+                display: "flex",
               }}
             >
               {name}
@@ -82,14 +89,15 @@ export async function GET(request: Request) {
           ))}
         </div>
 
-        {/* 서비스 태그 */}
-        <div style={{ color: "#aaa", fontSize: square ? "24px" : "20px" }}>
+        {/* 서비스 */}
+        <div style={{ color: "#aaa", fontSize: square ? "22px" : "19px", display: "flex" }}>
           광고음악 · 로고송 · BGM · 믹싱 · 마스터링 · 편곡
         </div>
 
-        {/* URL */}
+        {/* CTA */}
         <div
           style={{
+            display: "flex",
             background: "#111",
             color: "white",
             fontSize: "20px",
@@ -102,10 +110,6 @@ export async function GET(request: Request) {
         </div>
       </div>
     ),
-    {
-      width,
-      height,
-      fonts: [{ name: "Noto Sans KR", data: fontBold, weight: 700 }],
-    }
+    { width, height, fonts }
   );
 }

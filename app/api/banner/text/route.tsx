@@ -8,9 +8,15 @@ export async function GET(request: Request) {
   const width = 1200;
   const height = square ? 1200 : 628;
 
-  const fontBold = await fetch(
-    "https://fonts.gstatic.com/s/notosanskr/v36/PbyxFmXiEBPT4ITbgNA5Cgms3VYcOA-vvnIzzuoyeLTq8H4hfeE.woff2"
-  ).then((r) => r.arrayBuffer());
+  let fonts: { name: string; data: ArrayBuffer; weight: number }[] = [];
+  try {
+    const fontData = await fetch(
+      "https://fonts.gstatic.com/s/notosanskr/v36/PbyxFmXiEBPT4ITbgNA5Cgms3VYcOA-vvnIzzuoyeLTq8H4hfeE.woff2"
+    ).then((r) => r.arrayBuffer());
+    fonts = [{ name: "NotoKR", data: fontData, weight: 700 }];
+  } catch {}
+
+  const fontFamily = fonts.length ? "NotoKR" : "sans-serif";
 
   return new ImageResponse(
     (
@@ -24,28 +30,11 @@ export async function GET(request: Request) {
           alignItems: "flex-start",
           justifyContent: "space-between",
           padding: square ? "80px" : "64px 80px",
-          fontFamily: "Noto Sans KR",
-          position: "relative",
-          overflow: "hidden",
+          fontFamily,
         }}
       >
-        {/* 배경 장식 원 */}
-        <div
-          style={{
-            position: "absolute",
-            right: square ? -120 : -80,
-            top: square ? -120 : -80,
-            width: square ? 600 : 480,
-            height: square ? 600 : 480,
-            borderRadius: "50%",
-            background: "radial-gradient(circle, #F5C84233 0%, transparent 70%)",
-            display: "flex",
-          }}
-        />
-
         {/* 로고 */}
-        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-          {/* 엠블럼 SVG */}
+        <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
           <svg width="48" height="48" viewBox="0 0 30 30" fill="none">
             <ellipse cx="17" cy="17" rx="11" ry="5" fill="#F5C842" transform="rotate(-45 17 17)" />
             <ellipse cx="13" cy="13" rx="11" ry="5" fill="white" transform="rotate(-45 13 13)" />
@@ -64,7 +53,7 @@ export async function GET(request: Request) {
               color: "#111",
               fontSize: square ? "28px" : "22px",
               fontWeight: 700,
-              padding: "8px 20px",
+              padding: "8px 24px",
               borderRadius: "100px",
               width: "fit-content",
             }}
@@ -74,7 +63,7 @@ export async function GET(request: Request) {
           <div
             style={{
               color: "white",
-              fontSize: square ? "88px" : "72px",
+              fontSize: square ? "86px" : "70px",
               fontWeight: 900,
               lineHeight: 1.1,
               letterSpacing: "-2px",
@@ -84,21 +73,14 @@ export async function GET(request: Request) {
             <br />
             제작 전문
           </div>
-          <div
-            style={{
-              color: "#ffffff99",
-              fontSize: square ? "32px" : "26px",
-              fontWeight: 400,
-              marginTop: "8px",
-            }}
-          >
+          <div style={{ color: "#ffffff88", fontSize: square ? "30px" : "24px", marginTop: "8px" }}>
             로고송 · BGM · 믹싱 · 마스터링
           </div>
         </div>
 
         {/* 하단 */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%" }}>
-          <span style={{ color: "#ffffff55", fontSize: "22px" }}>muit.kr</span>
+          <span style={{ color: "#ffffff44", fontSize: "22px" }}>muit.kr</span>
           <div
             style={{
               display: "flex",
@@ -106,7 +88,7 @@ export async function GET(request: Request) {
               color: "#111",
               fontSize: "22px",
               fontWeight: 700,
-              padding: "14px 32px",
+              padding: "14px 36px",
               borderRadius: "100px",
             }}
           >
@@ -115,10 +97,6 @@ export async function GET(request: Request) {
         </div>
       </div>
     ),
-    {
-      width,
-      height,
-      fonts: [{ name: "Noto Sans KR", data: fontBold, weight: 700 }],
-    }
+    { width, height, fonts }
   );
 }
