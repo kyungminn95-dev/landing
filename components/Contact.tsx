@@ -5,17 +5,21 @@ export default function Contact() {
         <p className="text-xs tracking-widest uppercase mb-10" style={{ color: "var(--fg-subtle)" }}>Contact</p>
 
         {/* 지도 */}
-        <div className="rounded-2xl overflow-hidden mb-10">
-          <iframe
-            src="https://maps.google.com/maps?q=서울시+마포구+독막로6길+6&output=embed&hl=ko"
-            width="100%"
-            height="360"
-            style={{ border: 0, display: "block" }}
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
+        <a
+          href="https://map.naver.com/v5/search/서울시+마포구+독막로6길+6"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block rounded-2xl overflow-hidden mb-10"
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/api/map"
+            alt="스튜디오 위치 지도"
+            width="800"
+            height="400"
+            style={{ width: "100%", height: "360px", objectFit: "cover", display: "block" }}
           />
-        </div>
+        </a>
 
         {/* 정보 */}
         <div className="flex flex-col items-center gap-6">
