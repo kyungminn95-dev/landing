@@ -102,9 +102,8 @@ export default function ArtistDetails() {
   return (
     <div>
       {/* ── 프로필 ── */}
-      <section className="border-t" style={{ borderColor: "var(--border)" }}>
+      <section>
         <div className="max-w-5xl mx-auto px-6 py-24">
-          <p className="text-xs tracking-widest uppercase mb-12" style={{ color: "var(--fg-subtle)" }}>About</p>
 
           <div className="flex flex-col md:flex-row gap-16 items-center justify-center">
             {/* 사진 */}

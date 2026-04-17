@@ -3,13 +3,13 @@
 import { useState, useRef } from "react";
 import Link from "next/link";
 
-const links = [
-  { href: "/portfolio", label: "포트폴리오" },
-];
-
 const serviceLinks = [
   { href: "/services/brand", label: "Brand", sub: "광고 · 로고송 · BGM" },
   { href: "/services/artist", label: "Artist", sub: "믹싱 · 마스터링 · 편곡" },
+];
+
+const links = [
+  { href: "/portfolio", label: "포트폴리오" },
 ];
 
 function ShareIcon() {
@@ -41,47 +41,37 @@ export default function Nav() {
     }
   };
 
-  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    if (!href.startsWith("#")) return;
-    e.preventDefault();
-    setMenuOpen(false);
-    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
-    <nav
-      className="fixed top-0 left-0 right-0 z-50 border-b"
-      style={{
-        background: "var(--nav-bg)",
-        borderColor: "var(--border)",
-        backdropFilter: "blur(20px)",
-        WebkitBackdropFilter: "blur(20px)",
-      }}
-    >
-      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between md:grid md:grid-cols-3">
-
+    <div className="fixed top-0 left-0 right-0 z-50 px-4 pt-4">
+      {/* Floating nav card */}
+      <nav
+        className="max-w-5xl mx-auto rounded-2xl border px-5 h-14 flex items-center justify-between"
+        style={{
+          background: "rgba(255,255,255,0.92)",
+          borderColor: "rgba(0,0,0,0.08)",
+          backdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
+          boxShadow: "0 2px 16px rgba(0,0,0,0.07)",
+        }}
+      >
         {/* Left — Logo */}
-        <Link href="https://muit.kr" className="flex items-center gap-1.5">
-          <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
-            <ellipse cx="17" cy="17" rx="11" ry="5" fill="#F5C842" transform="rotate(-45 17 17)"/>
-            <ellipse cx="13" cy="13" rx="11" ry="5" fill="#111" transform="rotate(-45 13 13)"/>
-          </svg>
-          <span className="font-black text-xl tracking-tight" style={{ color: "var(--fg)" }}>muit</span>
-        </Link>
+        <div className="flex items-center">
+          <Link href="https://muit.kr" className="flex items-center gap-1.5">
+            <svg width="28" height="28" viewBox="0 0 30 30" fill="none">
+              <ellipse cx="17" cy="17" rx="11" ry="5" fill="#F5C842" transform="rotate(-45 17 17)"/>
+              <ellipse cx="13" cy="13" rx="11" ry="5" fill="#111" transform="rotate(-45 13 13)"/>
+            </svg>
+            <span className="font-black text-xl tracking-tight" style={{ color: "var(--fg)" }}>muit</span>
+          </Link>
+        </div>
 
-        {/* Center — Links (desktop) */}
-        <div className="hidden md:flex items-center justify-center gap-7 text-sm">
-          <Link
-            href="/#about"
-            className="transition-colors"
-            style={{ color: "var(--fg-muted)" }}
-            onMouseEnter={e => (e.currentTarget.style.color = "var(--fg)")}
-            onMouseLeave={e => (e.currentTarget.style.color = "var(--fg-muted)")}
-          >
+        {/* Center — Desktop nav links */}
+        <div className="hidden md:flex items-center gap-0.5 text-sm absolute left-1/2 -translate-x-1/2" style={{ color: "var(--fg-muted)" }}>
+          <Link href="/#about" className="px-3 py-1.5 rounded-xl transition-colors hover:bg-black/5 hover:text-[var(--fg)]">
             About
           </Link>
 
-          {/* 서비스 드롭다운 */}
+          {/* 서비스 dropdown */}
           <div
             className="relative"
             onMouseEnter={() => {
@@ -92,55 +82,41 @@ export default function Nav() {
               servicesTimeout.current = setTimeout(() => setServicesOpen(false), 150);
             }}
           >
-            <button
-              className="transition-colors"
-              style={{ color: servicesOpen ? "var(--fg)" : "var(--fg-muted)" }}
-            >
+            <button className="px-3 py-1.5 rounded-xl transition-colors hover:bg-black/5 hover:text-[var(--fg)] flex items-center gap-1">
               서비스
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
             </button>
             {servicesOpen && (
               <div
-                className="absolute top-full left-1/2 -translate-x-1/2 mt-3 rounded-xl border overflow-hidden"
-                style={{ background: "var(--nav-bg)", borderColor: "var(--border)", minWidth: "180px", backdropFilter: "blur(20px)" }}
+                className="absolute top-full left-1/2 -translate-x-1/2 mt-2 py-2 rounded-xl border min-w-[160px] shadow-lg"
+                style={{ background: "rgba(255,255,255,0.96)", borderColor: "rgba(0,0,0,0.08)", backdropFilter: "blur(20px)" }}
               >
                 {serviceLinks.map((sl) => (
                   <Link
                     key={sl.href}
                     href={sl.href}
-                    className="flex flex-col px-4 py-3 transition-colors"
-                    style={{ color: "var(--fg-muted)" }}
-                    onMouseEnter={e => (e.currentTarget.style.color = "var(--fg)")}
-                    onMouseLeave={e => (e.currentTarget.style.color = "var(--fg-muted)")}
-                    onClick={() => setServicesOpen(false)}
+                    className="flex flex-col px-4 py-2 hover:bg-black/5 transition-colors"
                   >
-                    <span className="font-semibold text-sm">{sl.label}</span>
-                    <span className="text-xs mt-0.5" style={{ color: "var(--fg-subtle)" }}>{sl.sub}</span>
+                    <span className="font-semibold text-sm" style={{ color: "var(--fg)" }}>{sl.label}</span>
+                    <span className="text-xs" style={{ color: "var(--fg-subtle)" }}>{sl.sub}</span>
                   </Link>
                 ))}
               </div>
             )}
           </div>
 
-          {links.map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              className="transition-colors"
-              style={{ color: "var(--fg-muted)" }}
-              onMouseEnter={e => (e.currentTarget.style.color = "var(--fg)")}
-              onMouseLeave={e => (e.currentTarget.style.color = "var(--fg-muted)")}
-            >
-              {l.label}
-            </Link>
-          ))}
+          <Link href="/portfolio" className="px-3 py-1.5 rounded-xl transition-colors hover:bg-black/5 hover:text-[var(--fg)]">
+            포트폴리오
+          </Link>
         </div>
 
-        {/* Right — Share + Contact */}
-        <div className="flex items-center justify-end gap-3">
-          {/* Share button */}
+        {/* Right — Share + Contact + Hamburger (mobile) */}
+        <div className="flex items-center gap-2">
           <button
             onClick={handleShare}
-            className="w-8 h-8 flex items-center justify-center rounded-full transition-colors relative"
+            className="w-8 h-8 flex items-center justify-center rounded-xl transition-colors hover:bg-black/5"
             style={{ color: copied ? "var(--fg)" : "var(--fg-muted)" }}
             aria-label="공유하기"
           >
@@ -151,21 +127,20 @@ export default function Nav() {
             )}
           </button>
 
-          {/* Contact — desktop */}
           <Link
             href="/contact"
-            className="hidden md:inline-flex px-4 py-1.5 border rounded-full text-sm transition-all"
-            style={{ borderColor: "var(--border)", color: "var(--fg-muted)" }}
-            onMouseEnter={e => { e.currentTarget.style.color = "var(--fg)"; e.currentTarget.style.borderColor = "var(--fg-muted)"; }}
-            onMouseLeave={e => { e.currentTarget.style.color = "var(--fg-muted)"; e.currentTarget.style.borderColor = "var(--border)"; }}
+            className="hidden md:inline-flex px-4 py-1.5 rounded-xl text-sm font-medium transition-all"
+            style={{ background: "var(--fg)", color: "var(--bg)" }}
+            onMouseEnter={e => { e.currentTarget.style.opacity = "0.85"; }}
+            onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
           >
             문의하기
           </Link>
 
-          {/* Mobile hamburger */}
+          {/* Mobile hamburger — 맨 오른쪽 */}
           <button
             onClick={() => setMenuOpen((v) => !v)}
-            className="md:hidden w-8 h-8 flex items-center justify-center"
+            className="md:hidden w-8 h-8 flex items-center justify-center rounded-xl transition-colors hover:bg-black/5"
             style={{ color: "var(--fg-muted)" }}
             aria-label="메뉴"
           >
@@ -177,17 +152,23 @@ export default function Nav() {
             </svg>
           </button>
         </div>
-      </div>
+      </nav>
 
-      {/* Mobile menu */}
+      {/* Mobile dropdown menu */}
       {menuOpen && (
         <div
-          className="md:hidden border-t px-6 py-4 flex flex-col gap-4 text-sm"
-          style={{ borderColor: "var(--border)", color: "var(--fg-muted)" }}
+          className="md:hidden max-w-5xl mx-auto mt-2 rounded-2xl border px-6 py-4 flex flex-col gap-4 text-sm"
+          style={{
+            background: "rgba(255,255,255,0.96)",
+            borderColor: "rgba(0,0,0,0.08)",
+            backdropFilter: "blur(20px)",
+            WebkitBackdropFilter: "blur(20px)",
+            boxShadow: "0 2px 16px rgba(0,0,0,0.07)",
+            color: "var(--fg-muted)",
+          }}
         >
           <Link href="/#about" onClick={() => setMenuOpen(false)}>About</Link>
 
-          {/* 서비스 */}
           <button
             className="flex items-center justify-between w-full text-left"
             onClick={() => setMobileServicesOpen((v) => !v)}
@@ -202,7 +183,7 @@ export default function Nav() {
             </svg>
           </button>
           {mobileServicesOpen && (
-            <div className="flex flex-col gap-3 pl-3 border-l" style={{ borderColor: "var(--border)" }}>
+            <div className="flex flex-col gap-3 pl-3 border-l" style={{ borderColor: "rgba(0,0,0,0.08)" }}>
               {serviceLinks.map((sl) => (
                 <Link
                   key={sl.href}
@@ -224,6 +205,6 @@ export default function Nav() {
           <Link href="/contact" onClick={() => setMenuOpen(false)}>문의하기</Link>
         </div>
       )}
-    </nav>
+    </div>
   );
 }
