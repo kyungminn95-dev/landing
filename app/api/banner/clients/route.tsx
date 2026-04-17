@@ -13,7 +13,8 @@ export async function GET(request: Request) {
   const width = 1200;
   const height = square ? 1200 : 628;
 
-  let fonts: { name: string; data: ArrayBuffer; weight: number }[] = [];
+  type W = 100|200|300|400|500|600|700|800|900;
+  let fonts: { name: string; data: ArrayBuffer; weight: W }[] = [];
   try {
     const fontData = await fetch(
       "https://fonts.gstatic.com/s/notosanskr/v36/PbyxFmXiEBPT4ITbgNA5Cgms3VYcOA-vvnIzzuoyeLTq8H4hfeE.woff2"
