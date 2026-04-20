@@ -17,7 +17,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "뮤잇 — 브랜드의 음악을 설계합니다",
+  title: "뮤잇",
   description: "광고음악, 로고송, BGM부터 믹싱·마스터링까지. 10년 경력의 뮤잇이 함께합니다.",
   metadataBase: new URL("https://muit.kr"),
   openGraph: {
