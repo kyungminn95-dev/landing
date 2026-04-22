@@ -4,12 +4,12 @@ import Image from "next/image";
 import { useState } from "react";
 
 const PRICES = [
-  { service: "믹싱 Basic", desc: "~15트랙", price: "250,000원", inquiry: false },
-  { service: "믹싱 Full", desc: "15트랙 이상", price: "400,000원", inquiry: false },
-  { service: "마스터링", desc: null, price: "100,000원", inquiry: false },
+  { service: "믹싱 Basic", desc: "~20트랙", price: "250,000원", inquiry: false },
+  { service: "믹싱 Full", desc: "20트랙~", price: "350,000원", inquiry: false },
+  { service: "마스터링", desc: null, price: "80,000원", inquiry: false },
   { service: "보컬 튠", desc: null, price: "50,000원 / 트랙", inquiry: false },
-  { service: "스트링 편곡", desc: null, price: "400,000원", inquiry: false },
-  { service: "데모·유튜브 커버 믹싱", desc: null, price: "별도 문의", inquiry: true },
+  { service: "스트링 편곡", desc: null, price: "400,000원~", inquiry: false },
+  { service: "데모·유튜브 커버 믹싱", desc: "투트랙", price: "100,000원", inquiry: false },
   { service: "작편곡", desc: null, price: "별도 문의", inquiry: true },
 ];
 
